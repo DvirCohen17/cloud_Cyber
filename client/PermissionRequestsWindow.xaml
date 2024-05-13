@@ -1,0 +1,31 @@
+﻿<Window x:Class="client_side.PermissionRequestsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Permission Requests" Height="400" Width="600" Background="Black">
+    <Grid>
+        <ListView x:Name="lstPermissionRequests" ItemsSource="{Binding PermissionRequests}" SelectionMode="Single" Background="Black">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="User Name" DisplayMemberBinding="{Binding UserName}" />
+                    <GridViewColumn Header="File Name" DisplayMemberBinding="{Binding FileName}" />
+                    <!-- Add buttons for approval and rejection -->
+                    <GridViewColumn>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Button Content="V" Click="ApproveButtonClick" />
+                                    <Button Content="X" Click="RejectButtonClick" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+        <ProgressBar x:Name="loadingSpinner" IsIndeterminate="True" Visibility="Collapsed" HorizontalAlignment="Center" VerticalAlignment="Center" Width="50" Height="50"/>
+
+        <Button Content="Exit" Click="BtnExit_Click" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,20"/>
+        <Button x:Name="BtnRefresh" Content="Refresh" Click="BtnRefresh_Click" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="335,0,0,20"/>
+    </Grid>
+</Window>
