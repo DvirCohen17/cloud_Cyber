@@ -1,4 +1,4 @@
-﻿using Microsoft.VisualBasic;
+using Microsoft.VisualBasic;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -184,6 +184,12 @@ namespace client_side
             Close();
         }
 
+        private void BtnLogout_Click(object sender, RoutedEventArgs e)
+        {
+            string code = ((int)MessageCodes.MC_LOGOUT_REQUEST).ToString();
+            communicator.SendData($"{code}");
+        }
+
         private void remove(object sender, RoutedEventArgs e)
         {
             FileModel selectedFile = lstFiles.SelectedItem as FileModel;
@@ -299,6 +305,9 @@ namespace client_side
                         case "305": // MC_APPROVE_JOIN_RESP
                             HandleJoinFile(update);
                             break;
+                        case "406":
+                            HandleLogout(update);
+                            break;
                         case "302": // MC_APPROVE_REQ_RESP
                             break;
                         default:
@@ -334,6 +343,19 @@ namespace client_side
             {
                 TextEditor TextEditorWindow = new TextEditor(communicator, FileName);
                 TextEditorWindow.Show();
+                Close();
+            });
+        }
+
+        private void HandleLogout(string update)
+        {
+            disconnect = false;
+            isListeningToServer = false;
+
+            Dispatcher.Invoke(() =>
+            {
+                LoginWindow loginWindow = new LoginWindow(communicator);
+                loginWindow.Show();
                 Close();
             });
         }
@@ -406,10 +428,6 @@ namespace client_side
                 if (result == MessageBoxResult.Yes)
                 {
                     SendPermissionRequest(fileName);
-                }
-                else
-                {
-                    Close();
                 }
             }
             else
