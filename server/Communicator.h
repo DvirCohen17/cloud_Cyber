@@ -99,6 +99,7 @@ public:
     Action adjustIndexForSync(const std::string& fileName, Action reqDetail);
 
     void login(SOCKET client_sock, std::string username, std::string pass, std::string mail);
+    void logout(SOCKET client_sock);
     void signUp(SOCKET client_sock, std::string username, std::string pass, std::string mail);
     void forgotPassword(SOCKET client_sock, std::string username, std::string pass, std::string oldPass, std::string mail);
     void createFile(SOCKET client_sock, std::string fileName);
