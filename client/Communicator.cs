@@ -52,15 +52,17 @@ namespace client_side
 
         MC_DISCONNECT = 300, //user
         MC_LOGIN_REQUEST = 301,
+        MC_LOGOUT_REQUEST = 306,
         MC_SIGNUP_REQUEST = 303,
         MC_FORGOT_PASSW_REQUEST = 304,
+
         MC_APPROVE_REQ_RESP = 302,
         MC_APPROVE_JOIN_RESP = 305,
-        MC_RESEND_REQUEST = 306,
 
         MC_LOGIN_RESP = 401,
         MC_SIGNUP_RESP = 403,
-        MC_FORGOT_PASSW_RESP = 404
+        MC_FORGOT_PASSW_RESP = 404,
+        MC_LOGOUT_RESP = 406
 
     };
     public class Communicator
