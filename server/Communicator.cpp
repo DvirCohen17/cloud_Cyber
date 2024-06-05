@@ -112,6 +112,13 @@ void Communicator::login(SOCKET client_sock,
 	}
 }
 
+void Communicator::logout(SOCKET client_sock)
+{
+	std::string repCode = std::to_string(MC_LOGOUT_RESP);
+	Helper::sendData(client_sock, BUFFER(repCode.begin(), repCode.end()));
+	handleClientDisconnect(client_sock);
+}
+
 void Communicator::signUp(SOCKET client_sock, 
 	std::string username, std::string pass, std::string mail)
 {
@@ -552,6 +559,9 @@ void Communicator::handleNewClient(SOCKET client_sock)
 			case MC_LOGIN_REQUEST:
 				login(client_sock, reqDetail.userName, reqDetail.pass, reqDetail.email);
 				break;
+			case MC_LOGOUT_REQUEST:
+				logout(client_sock);
+				break;
 			case MC_SIGNUP_REQUEST:
 				signUp(client_sock, reqDetail.userName, reqDetail.pass, reqDetail.email);
 				break;
@@ -935,6 +945,7 @@ Action Communicator::deconstructReq(const std::string& req) {
 		newAction.passLength = std::stoi(action.substr(5 + newAction.userNameLength, 5));
 		newAction.pass = action.substr(10 + newAction.userNameLength, newAction.passLength);
 		break;
+
 	case MC_SIGNUP_REQUEST:
 		newAction.userNameLength = std::stoi(action.substr(0, 5));
 		newAction.userName = action.substr(5, newAction.userNameLength);
